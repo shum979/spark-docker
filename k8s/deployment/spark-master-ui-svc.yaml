@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Service
+metadata:
+  finalizers:
+    - service.kubernetes.io/load-balancer-cleanup
+  labels:
+    appName: spark-master
+  name: spark-master-ui-service
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+    - name: 8080-to-8080-tcp
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    - name: 80-to-80-tcp
+      port: 80
+      protocol: TCP
+      targetPort: 80
+  selector:
+    appName: spark-master
+  sessionAffinity: None
+  type: LoadBalancer
+
