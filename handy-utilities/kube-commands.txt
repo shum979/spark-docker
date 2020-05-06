@@ -1,0 +1,12 @@
+spark-submit \
+  --class org.apache.spark.examples.SparkPi \
+  --master spark://spark-app-mh9mz:7077 \
+  /opt/spark/examples/jars/spark-examples_2.11-2.4.4.jar \
+  100
+
+
+kubectl run --image=shum979/recon-spark:0.1.0 spark-app
+
+kubectl run --image=shum979/recon-spark:0.1.0 spark-worker --env="SPARK_MODE=worker" --env="SPARK_MASTER_URL=spark-app-mh9mz:7077"
+
+kubectl apply -f k8s/deployment --recursive

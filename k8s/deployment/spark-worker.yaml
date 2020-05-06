@@ -25,6 +25,10 @@ spec:
       labels:
         appName: spark-worker
     spec:
+      volumes:
+        - name: pv-storage
+          persistentVolumeClaim:
+            claimName: worker-pvc
       containers:
         - env:
             - name: SPARK_MODE
@@ -34,6 +38,9 @@ spec:
           image: shum979/recon-spark:0.1.0
           imagePullPolicy: IfNotPresent
           name: spark-worker
+#          volumeMounts:
+#            - mountPath: "/share/data"
+#              name: pv-storage
           resources: {}
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
